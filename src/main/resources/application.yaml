@@ -1,0 +1,6 @@
+server:
+  port: 2233
+
+spring:
+  application:
+    name: LaboratoryManagementSystem
