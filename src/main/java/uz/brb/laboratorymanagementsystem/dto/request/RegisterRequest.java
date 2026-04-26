@@ -18,6 +18,8 @@ public class RegisterRequest {
     private String username;
     @NotBlank(message = "password can not be null or empty")
     private String password;
+    @NotBlank(message = "email can not be null or empty")
+    private String email;
     @NotBlank(message = "role can not be null or empty")
     private UserRole userRole;
 }

@@ -1,6 +1,7 @@
 package uz.brb.laboratorymanagementsystem.repository;
 
 import jakarta.persistence.Tuple;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,6 @@ public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
 
     @Query("select count(*), au.userRole from AuthUser as au group by au.userRole")
     List<Tuple> roleStatistics();
+
+    Optional<AuthUser> findByEmail(String email);
 }

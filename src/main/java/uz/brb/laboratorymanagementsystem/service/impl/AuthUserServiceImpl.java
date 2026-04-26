@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,7 @@ import uz.brb.laboratorymanagementsystem.repository.AuthUserRepository;
 import uz.brb.laboratorymanagementsystem.service.AuthUserService;
 import uz.brb.laboratorymanagementsystem.util.JWTUtil;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -50,9 +52,21 @@ public class AuthUserServiceImpl implements AuthUserService {
                     .timestamp(localDateTimeFormatter(LocalDateTime.now()))
                     .build();
         }
+        Optional<AuthUser> byEmail = authUserRepository.findByEmail(registerRequest.getEmail());
+        if (byEmail.isPresent()) {
+            return Response.builder()
+                    .code(HttpStatus.BAD_REQUEST.value())
+                    .status(HttpStatus.BAD_REQUEST)
+                    .success(false)
+                    .message("Email already exists")
+                    .timestamp(localDateTimeFormatter(LocalDateTime.now()))
+                    .build();
+        }
         AuthUser authUser = new AuthUser();
         authUser.setFullName(registerRequest.getFullName());
         authUser.setUsername(registerRequest.getUsername());
+        authUser.setEmail(registerRequest.getEmail());
+        authUser.setIsActive(Boolean.TRUE);
         authUser.setPassword(hashPassword(registerRequest.getPassword()));
         authUser.setUserRole(UserRole.USER);
         authUserRepository.save(authUser);
@@ -87,9 +101,12 @@ public class AuthUserServiceImpl implements AuthUserService {
                     .timestamp(localDateTimeFormatter(LocalDateTime.now()))
                     .build();
         }
-        authenticationManager.authenticate(
+        Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
+        AuthUser principal = (AuthUser) auth.getPrincipal();
+        principal.setLastLoginAt(Instant.now());
+        authUserRepository.save(principal);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getUsername());
         String jwtToken = jwtUtil.generateToken(userDetails.getUsername());
         return Response.builder()
