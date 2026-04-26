@@ -14,7 +14,7 @@ import uz.brb.laboratorymanagementsystem.dto.ShortDto;
 import uz.brb.laboratorymanagementsystem.dto.response.Response;
 import uz.brb.laboratorymanagementsystem.dto.response.UserResponse;
 import uz.brb.laboratorymanagementsystem.entity.AuthUser;
-import uz.brb.laboratorymanagementsystem.enums.Role;
+import uz.brb.laboratorymanagementsystem.enums.UserRole;
 import uz.brb.laboratorymanagementsystem.exception.ResourceNotFoundException;
 import uz.brb.laboratorymanagementsystem.mapper.UserMapper;
 import uz.brb.laboratorymanagementsystem.repository.AuthUserRepository;
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
         for (Tuple roleStatistic : roleStatistics) {
             shortDtoList.add(
                     new ShortDto(
-                            String.valueOf(roleStatistic.get(1, Role.class)),
+                            String.valueOf(roleStatistic.get(1, UserRole.class)),
                             roleStatistic.get(0, Long.class)
                     )
             );

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.brb.laboratorymanagementsystem.enums.Role;
+import uz.brb.laboratorymanagementsystem.enums.UserRole;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +19,5 @@ public class RegisterRequest {
     @NotBlank(message = "password can not be null or empty")
     private String password;
     @NotBlank(message = "role can not be null or empty")
-    private Role role;
+    private UserRole userRole;
 }

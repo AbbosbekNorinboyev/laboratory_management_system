@@ -15,7 +15,7 @@ public class UserMapper {
                 .fullName(entity.getFullName())
                 .password(entity.getPassword())
                 .username(entity.getUsername())
-                .role(entity.getRole())
+                .userRole(entity.getUserRole())
                 .build();
     }
 
@@ -39,8 +39,8 @@ public class UserMapper {
         if (response.getUsername() != null && !response.getUsername().trim().isEmpty()) {
             entity.setUsername(response.getUsername());
         }
-        if (response.getRole() != null) {
-            entity.setRole(response.getRole());
+        if (response.getUserRole() != null) {
+            entity.setUserRole(response.getUserRole());
         }
     }
 }

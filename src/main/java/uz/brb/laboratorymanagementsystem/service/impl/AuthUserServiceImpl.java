@@ -15,7 +15,7 @@ import uz.brb.laboratorymanagementsystem.dto.request.UpdatePasswordRequest;
 import uz.brb.laboratorymanagementsystem.dto.response.ErrorResponse;
 import uz.brb.laboratorymanagementsystem.dto.response.Response;
 import uz.brb.laboratorymanagementsystem.entity.AuthUser;
-import uz.brb.laboratorymanagementsystem.enums.Role;
+import uz.brb.laboratorymanagementsystem.enums.UserRole;
 import uz.brb.laboratorymanagementsystem.exception.ResourceNotFoundException;
 import uz.brb.laboratorymanagementsystem.repository.AuthUserRepository;
 import uz.brb.laboratorymanagementsystem.service.AuthUserService;
@@ -54,7 +54,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         authUser.setFullName(registerRequest.getFullName());
         authUser.setUsername(registerRequest.getUsername());
         authUser.setPassword(hashPassword(registerRequest.getPassword()));
-        authUser.setRole(Role.USER);
+        authUser.setUserRole(UserRole.USER);
         authUserRepository.save(authUser);
         return Response.builder()
                 .code(HttpStatus.OK.value())

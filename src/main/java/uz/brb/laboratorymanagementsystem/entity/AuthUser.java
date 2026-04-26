@@ -1,15 +1,13 @@
 package uz.brb.laboratorymanagementsystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uz.brb.laboratorymanagementsystem.enums.Role;
+import uz.brb.laboratorymanagementsystem.enums.UserRole;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,17 +21,29 @@ import java.util.List;
 @ToString
 @Table(name = "auth_user")
 public class AuthUser extends BaseEntity implements UserDetails {
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
     private String fullName;
     private String phoneNumber;
     private String password;
     private String username;
 
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
+    @Column(name = "last_login_at")
+    private Instant lastLoginAt;
+
+    @Column(name = "archived_at")
+    private Instant archivedAt;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private UserRole userRole;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + userRole.name()));
     }
 
     @Override

@@ -1,6 +1,9 @@
 package uz.brb.laboratorymanagementsystem.enums;
 
-public enum Role {
+public enum UserRole {
     ADMIN,
+    MANAGER,
+    ANALYST,
+    REVIEWER,
     USER
 }

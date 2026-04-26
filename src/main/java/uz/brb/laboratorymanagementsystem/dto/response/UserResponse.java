@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.brb.laboratorymanagementsystem.enums.Role;
+import uz.brb.laboratorymanagementsystem.enums.UserRole;
 
 @Data
 @NoArgsConstructor
@@ -17,5 +17,5 @@ public class UserResponse {
     private String fullName;
     private String password;
     private String username;
-    private Role role;
+    private UserRole userRole;
 }

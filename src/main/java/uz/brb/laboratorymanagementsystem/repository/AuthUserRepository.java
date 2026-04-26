@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
     Optional<AuthUser> findByUsername(String username);
 
-    @Query("select count(*), au.role from AuthUser as au group by au.role")
+    @Query("select count(*), au.userRole from AuthUser as au group by au.userRole")
     List<Tuple> roleStatistics();
 }
