@@ -1,7 +1,6 @@
 package uz.brb.laboratorymanagementsystem.repository;
 
 import jakarta.persistence.Tuple;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
