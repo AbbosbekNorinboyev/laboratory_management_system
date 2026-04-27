@@ -16,9 +16,10 @@ import uz.brb.laboratorymanagementsystem.dto.request.UpdatePasswordRequest;
 import uz.brb.laboratorymanagementsystem.dto.response.ErrorResponse;
 import uz.brb.laboratorymanagementsystem.dto.response.Response;
 import uz.brb.laboratorymanagementsystem.entity.AuthUser;
-import uz.brb.laboratorymanagementsystem.enums.UserRole;
+import uz.brb.laboratorymanagementsystem.entity.RoleEntity;
 import uz.brb.laboratorymanagementsystem.exception.ResourceNotFoundException;
 import uz.brb.laboratorymanagementsystem.repository.AuthUserRepository;
+import uz.brb.laboratorymanagementsystem.repository.RoleRepository;
 import uz.brb.laboratorymanagementsystem.service.AuthUserService;
 import uz.brb.laboratorymanagementsystem.utils.JWTUtil;
 
@@ -39,6 +40,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailsService customUserDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public Response<?> register(RegisterRequest registerRequest) {
@@ -62,13 +64,15 @@ public class AuthUserServiceImpl implements AuthUserService {
                     .timestamp(localDateTimeFormatter(LocalDateTime.now()))
                     .build();
         }
+        RoleEntity roleEntity = roleRepository.findByName(String.valueOf(registerRequest.getUserRole()))
+                .orElseThrow(() -> new RuntimeException("Role not found"));
         AuthUser authUser = new AuthUser();
         authUser.setFullName(registerRequest.getFullName());
         authUser.setUsername(registerRequest.getUsername());
         authUser.setEmail(registerRequest.getEmail());
         authUser.setIsActive(Boolean.TRUE);
         authUser.setPassword(hashPassword(registerRequest.getPassword()));
-        authUser.setUserRole(UserRole.USER);
+        authUser.setRoles(List.of(roleEntity));
         authUserRepository.save(authUser);
         return Response.builder()
                 .code(HttpStatus.OK.value())

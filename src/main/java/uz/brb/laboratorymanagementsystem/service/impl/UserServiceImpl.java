@@ -1,7 +1,6 @@
 package uz.brb.laboratorymanagementsystem.service.impl;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -14,7 +13,7 @@ import uz.brb.laboratorymanagementsystem.dto.ShortDto;
 import uz.brb.laboratorymanagementsystem.dto.response.Response;
 import uz.brb.laboratorymanagementsystem.dto.response.UserResponse;
 import uz.brb.laboratorymanagementsystem.entity.AuthUser;
-import uz.brb.laboratorymanagementsystem.enums.UserRole;
+import uz.brb.laboratorymanagementsystem.entity.RoleEntity;
 import uz.brb.laboratorymanagementsystem.exception.ResourceNotFoundException;
 import uz.brb.laboratorymanagementsystem.mapper.UserMapper;
 import uz.brb.laboratorymanagementsystem.repository.AuthUserRepository;
@@ -98,16 +97,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response<?> roleStatistics() {
-        List<Tuple> roleStatistics = authUserRepository.roleStatistics();
-        List<ShortDto> shortDtoList = new ArrayList<>();
-        for (Tuple roleStatistic : roleStatistics) {
-            shortDtoList.add(
-                    new ShortDto(
-                            String.valueOf(roleStatistic.get(1, UserRole.class)),
-                            roleStatistic.get(0, Long.class)
-                    )
-            );
-        }
+        List<Object[]> roleStatistics = authUserRepository.roleStatistics();
+        List<ShortDto> shortDtoList = roleStatistics.stream()
+                .map(row -> new ShortDto(
+                        String.valueOf(row[1]),  // r.name
+                        (Long) row[0])) // count(*)
+                .toList();
         return Response.builder()
                 .code(HttpStatus.OK.value())
                 .status(HttpStatus.OK)

@@ -3,6 +3,7 @@ package uz.brb.laboratorymanagementsystem.mapper;
 import org.springframework.stereotype.Component;
 import uz.brb.laboratorymanagementsystem.dto.response.UserResponse;
 import uz.brb.laboratorymanagementsystem.entity.AuthUser;
+import uz.brb.laboratorymanagementsystem.entity.RoleEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,17 @@ public class UserMapper {
     public UserResponse toResponse(AuthUser entity) {
         return UserResponse.builder()
                 .id(entity.getId())
+                .email(entity.getEmail())
                 .fullName(entity.getFullName())
+                .phoneNumber(entity.getPhoneNumber())
                 .password(entity.getPassword())
                 .username(entity.getUsername())
-                .userRole(entity.getUserRole())
+                .isActive(entity.getIsActive())
+                .lastLoginAt(entity.getLastLoginAt())
+                .roles(entity.getRoles()
+                        .stream()
+                        .map(RoleEntity::getName)
+                        .toList())
                 .build();
     }
 
@@ -38,9 +46,6 @@ public class UserMapper {
         }
         if (response.getUsername() != null && !response.getUsername().trim().isEmpty()) {
             entity.setUsername(response.getUsername());
-        }
-        if (response.getUserRole() != null) {
-            entity.setUserRole(response.getUserRole());
         }
     }
 }
