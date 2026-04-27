@@ -1,4 +1,4 @@
-package uz.brb.laboratorymanagementsystem.util;
+package uz.brb.laboratorymanagementsystem.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;

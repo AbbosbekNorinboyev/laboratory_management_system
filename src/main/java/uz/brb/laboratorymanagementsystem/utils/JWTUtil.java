@@ -1,4 +1,4 @@
-package uz.brb.laboratorymanagementsystem.util;
+package uz.brb.laboratorymanagementsystem.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

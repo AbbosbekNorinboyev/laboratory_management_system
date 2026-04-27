@@ -1,4 +1,4 @@
-package uz.brb.laboratorymanagementsystem.util;
+package uz.brb.laboratorymanagementsystem.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

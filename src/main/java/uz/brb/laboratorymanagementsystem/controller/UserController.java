@@ -7,7 +7,7 @@ import uz.brb.laboratorymanagementsystem.dto.response.Response;
 import uz.brb.laboratorymanagementsystem.dto.response.UserResponse;
 import uz.brb.laboratorymanagementsystem.entity.AuthUser;
 import uz.brb.laboratorymanagementsystem.service.UserService;
-import uz.brb.laboratorymanagementsystem.util.validator.CurrentUser;
+import uz.brb.laboratorymanagementsystem.utils.validator.CurrentUser;
 
 @RestController
 @RequestMapping("/api/users")

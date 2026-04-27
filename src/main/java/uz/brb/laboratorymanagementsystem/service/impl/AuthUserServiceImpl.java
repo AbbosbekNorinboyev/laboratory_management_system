@@ -20,16 +20,16 @@ import uz.brb.laboratorymanagementsystem.enums.UserRole;
 import uz.brb.laboratorymanagementsystem.exception.ResourceNotFoundException;
 import uz.brb.laboratorymanagementsystem.repository.AuthUserRepository;
 import uz.brb.laboratorymanagementsystem.service.AuthUserService;
-import uz.brb.laboratorymanagementsystem.util.JWTUtil;
+import uz.brb.laboratorymanagementsystem.utils.JWTUtil;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static uz.brb.laboratorymanagementsystem.util.PasswordHasher.hashPassword;
-import static uz.brb.laboratorymanagementsystem.util.PasswordValidator.validatePassword;
-import static uz.brb.laboratorymanagementsystem.util.Util.localDateTimeFormatter;
+import static uz.brb.laboratorymanagementsystem.utils.PasswordHasher.hashPassword;
+import static uz.brb.laboratorymanagementsystem.utils.PasswordValidator.validatePassword;
+import static uz.brb.laboratorymanagementsystem.utils.Utils.localDateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package uz.brb.laboratorymanagementsystem.util.validator;
+package uz.brb.laboratorymanagementsystem.utils.validator;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

@@ -1,4 +1,4 @@
-package uz.brb.laboratorymanagementsystem.util.validator;
+package uz.brb.laboratorymanagementsystem.utils.validator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -6,12 +6,12 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = CardNumberValidator.class)
+@Constraint(validatedBy = ExpiryDateValidator.class)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CardNumber {
+public @interface ExpiryDate {
 
-    String message() default "The card number is not valid.";
+    String message() default "Invalid date format. Use yyMM";
 
     Class<?>[] groups() default {};
 

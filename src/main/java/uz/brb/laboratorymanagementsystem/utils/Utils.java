@@ -1,4 +1,4 @@
-package uz.brb.laboratorymanagementsystem.util;
+package uz.brb.laboratorymanagementsystem.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Slf4j
-public class Util {
+public class Utils {
     public static String convertObjectToJsonString(Object object) {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = null;
@@ -136,5 +136,28 @@ public class Util {
                 .withZoneSameInstant(ZoneId.of("UTC+5"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return utcPlus5DateTime.format(formatter);
+    }
+
+    public static String asString(Object val) {
+        return val != null ? String.valueOf(val) : null;
+    }
+
+    public static Long asLong(Object val) {
+        if (val == null) return null;
+        if (val instanceof Number n) return n.longValue();
+        return Long.parseLong(String.valueOf(val));
+    }
+
+    public static Double asDouble(Object val) {
+        if (val == null) return null;
+        if (val instanceof Number n) return n.doubleValue();
+        return Double.parseDouble(String.valueOf(val));
+    }
+
+    public static Boolean asBoolean(Object val) {
+        if (val == null) return null;
+        if (val instanceof Boolean b) return b;
+        String v = String.valueOf(val).toLowerCase();
+        return v.equals("true") || v.equals("1")  || v.equals("y") || v.equals("yes");
     }
 }

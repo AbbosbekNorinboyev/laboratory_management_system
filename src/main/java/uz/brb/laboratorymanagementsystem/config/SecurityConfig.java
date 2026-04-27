@@ -23,7 +23,7 @@ import uz.brb.laboratorymanagementsystem.dto.response.Response;
 
 import java.time.LocalDateTime;
 
-import static uz.brb.laboratorymanagementsystem.util.Util.localDateTimeFormatter;
+import static uz.brb.laboratorymanagementsystem.utils.Utils.localDateTimeFormatter;
 
 @Configuration
 @EnableWebSecurity
