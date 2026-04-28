@@ -19,9 +19,6 @@ public class TestOrderEntity extends BaseEntity {
     @JoinColumn(name = "plant_id", insertable = false, updatable = false)
     private PlantEntity plant;
 
-    @Column(name = "sample_id", nullable = false)
-    private String sampleId;
-
     @Column(name = "test_definition_id")
     private String testDefinitionId;
 
@@ -30,9 +27,6 @@ public class TestOrderEntity extends BaseEntity {
 
     @Column(name = "specification_item_id")
     private String specificationItemId;
-
-    @Column(name = "status_id", nullable = false)
-    private String statusId;
 
     @Column(name = "priority_id")
     private String priorityId;

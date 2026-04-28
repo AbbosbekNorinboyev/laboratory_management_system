@@ -18,12 +18,6 @@ public class SampleEntity extends BaseEntity {
     @Column(name = "sample_no", nullable = false)
     private String sampleNo;
 
-    @Column(name = "lab_id", nullable = false)
-    private String labId;
-
-    @Column(name = "workshop_id")
-    private String workshopId;
-
     @Column(name = "section_id")
     private String sectionId;
 
@@ -32,9 +26,6 @@ public class SampleEntity extends BaseEntity {
 
     @Column(name = "shift_id")
     private String shiftId;
-
-    @Column(name = "batch_id")
-    private String batchId;
 
     @Column(name = "product_id")
     private String productId;
@@ -45,20 +36,11 @@ public class SampleEntity extends BaseEntity {
     @Column(name = "supplier_id")
     private String supplierId;
 
-    @Column(name = "sample_type_id", nullable = false)
-    private String sampleTypeId;
-
     @Column(name = "sample_source_id", nullable = false)
     private String sampleSourceId;
 
     @Column(name = "storage_location_id")
     private String storageLocationId;
-
-    @Column(name = "priority_id", nullable = false)
-    private String priorityId;
-
-    @Column(name = "status_id", nullable = false)
-    private String statusId;
 
     @Column(name = "taken_at", nullable = false)
     private Instant takenAt;

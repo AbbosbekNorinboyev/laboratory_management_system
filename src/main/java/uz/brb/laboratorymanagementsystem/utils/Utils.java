@@ -17,6 +17,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 @Slf4j
@@ -158,6 +159,46 @@ public class Utils {
         if (val == null) return null;
         if (val instanceof Boolean b) return b;
         String v = String.valueOf(val).toLowerCase();
-        return v.equals("true") || v.equals("1")  || v.equals("y") || v.equals("yes");
+        return v.equals("true") || v.equals("1") || v.equals("y") || v.equals("yes");
+    }
+
+    public static String trimToNull(String value) {
+        if (value == null) return null;
+        String trimmed = value.trim();
+        return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    public static Object parseJsonNullable(String value) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (value == null || value.isBlank() || "null".equals(value)) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(value, Object.class);
+        } catch (JsonProcessingException exception) {
+            return value;
+        }
+    }
+
+    public static String toJsonNullable(Map<String, Object> value) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (value == null) {
+            return null;
+        }
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException exception) {
+            throw new IllegalStateException("Failed to serialize audit payload.", exception);
+        }
+    }
+
+    public static boolean objectEquals(Object left, Object right) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(left)
+                    .equals(objectMapper.writeValueAsString(right));
+        } catch (JsonProcessingException exception) {
+            return left == null ? right == null : left.equals(right);
+        }
     }
 }
