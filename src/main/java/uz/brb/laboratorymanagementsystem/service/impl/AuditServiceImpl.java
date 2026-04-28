@@ -38,11 +38,8 @@ public class AuditServiceImpl implements AuditService {
             String comment
     ) {
         RequestContext context = RequestContextHolder.get();
-        System.out.println("context = " + context);
         AuthUser actor = RequestContextHolder.getCurrentUser();
-        System.out.println("actor = " + actor);
         Map<String, Object> diff = buildDiff(oldValue, newValue);
-        System.out.println("diff = " + diff);
 
         AuditLogEntity log = AuditLogEntity.builder()
                 .occurredAt(Instant.now())
@@ -60,7 +57,6 @@ public class AuditServiceImpl implements AuditService {
                 .sourceSystem(context != null ? context.sourceSystem() : null)
                 .ipAddress(context != null ? context.ipAddress() : null)
                 .build();
-        System.out.println("log = " + log);
 
         auditLogRepository.save(log);
     }
