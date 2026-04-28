@@ -103,6 +103,21 @@ public class UserServiceImpl implements UserService {
                     .timestamp(localDateTimeFormatter(LocalDateTime.now()))
                     .build();
         }
+        auditService.saveLog(
+                "User",
+                user.getId(),
+                "users.found",
+                null,
+                null,
+                Map.of(
+                        "id", user.getId(),
+                        "email", user.getEmail(),
+                        "username", user.getUsername(),
+                        "fullName", user.getFullName(),
+                        "isActive", user.getIsActive()
+                ),
+                normalizeText("User successfully found")
+        );
         return Response.builder()
                 .code(HttpStatus.OK.value())
                 .status(HttpStatus.OK)
