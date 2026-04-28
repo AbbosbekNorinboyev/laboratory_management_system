@@ -1,5 +1,6 @@
 package uz.brb.laboratorymanagementsystem.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import uz.brb.laboratorymanagementsystem.entity.AuthUser;
 import uz.brb.laboratorymanagementsystem.service.UserService;
 import uz.brb.laboratorymanagementsystem.utils.validator.CurrentUser;
 
+@Tag(name = "Users", description = "Users log inspection")
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor

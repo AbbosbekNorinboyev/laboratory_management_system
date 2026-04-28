@@ -1,5 +1,6 @@
 package uz.brb.laboratorymanagementsystem.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import uz.brb.laboratorymanagementsystem.dto.request.LoginRequest;
@@ -8,6 +9,7 @@ import uz.brb.laboratorymanagementsystem.dto.request.UpdatePasswordRequest;
 import uz.brb.laboratorymanagementsystem.dto.response.Response;
 import uz.brb.laboratorymanagementsystem.service.AuthUserService;
 
+@Tag(name = "Auth", description = "Auth log inspection")
 @RestController
 @RequestMapping("/api/auths")
 @RequiredArgsConstructor
