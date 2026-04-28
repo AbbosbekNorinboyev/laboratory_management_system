@@ -13,17 +13,19 @@ import uz.brb.laboratorymanagementsystem.dto.ShortDto;
 import uz.brb.laboratorymanagementsystem.dto.response.Response;
 import uz.brb.laboratorymanagementsystem.dto.response.UserResponse;
 import uz.brb.laboratorymanagementsystem.entity.AuthUser;
-import uz.brb.laboratorymanagementsystem.entity.RoleEntity;
 import uz.brb.laboratorymanagementsystem.exception.ResourceNotFoundException;
 import uz.brb.laboratorymanagementsystem.mapper.UserMapper;
 import uz.brb.laboratorymanagementsystem.repository.AuthUserRepository;
+import uz.brb.laboratorymanagementsystem.service.AuditService;
 import uz.brb.laboratorymanagementsystem.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static uz.brb.laboratorymanagementsystem.utils.Utils.localDateTimeFormatter;
+import static uz.brb.laboratorymanagementsystem.utils.Utils.normalizeText;
 
 @Service
 @RequiredArgsConstructor
@@ -31,11 +33,27 @@ public class UserServiceImpl implements UserService {
     private final AuthUserRepository authUserRepository;
     private final UserMapper userMapper;
     private final EntityManager entityManager;
+    private final AuditService auditService;
 
     @Override
     public Response<?> get(Long id) {
         AuthUser authUser = authUserRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AuthUser not found: " + id));
+        auditService.saveLog(
+                "User",
+                id,
+                "users.found",
+                null,
+                null,
+                Map.of(
+                        "id", authUser.getId(),
+                        "email", authUser.getEmail(),
+                        "username", authUser.getUsername(),
+                        "fullName", authUser.getFullName(),
+                        "isActive", authUser.getIsActive()
+                ),
+                normalizeText("User successfully found")
+        );
         return Response.builder()
                 .code(HttpStatus.OK.value())
                 .status(HttpStatus.OK)

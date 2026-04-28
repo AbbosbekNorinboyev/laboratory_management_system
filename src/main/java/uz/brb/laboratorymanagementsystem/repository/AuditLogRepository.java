@@ -11,10 +11,9 @@ import java.util.List;
 
 @Repository
 public interface AuditLogRepository extends JpaRepository<AuditLogEntity, Long> {
-    @Query("""
-            SELECT al FROM AuditLogEntity al
-            LEFT JOIN FETCH al.actorUser
-            LEFT JOIN FETCH al.plant
+    @Query(value = """
+            SELECT al
+            FROM AuditLogEntity as al
             WHERE (:entityType IS NULL OR al.entityType = :entityType)
               AND (:entityId IS NULL OR al.entityId = :entityId)
               AND (:actorUserId IS NULL OR al.actorUserId = :actorUserId)
@@ -24,8 +23,8 @@ public interface AuditLogRepository extends JpaRepository<AuditLogEntity, Long> 
             """)
     List<AuditLogEntity> findByFilters(
             @Param("entityType") String entityType,
-            @Param("entityId") String entityId,
-            @Param("actorUserId") String actorUserId,
+            @Param("entityId") Long entityId,
+            @Param("actorUserId") Long actorUserId,
             @Param("requestId") String requestId,
             @Param("actionCode") String actionCode,
             Pageable pageable

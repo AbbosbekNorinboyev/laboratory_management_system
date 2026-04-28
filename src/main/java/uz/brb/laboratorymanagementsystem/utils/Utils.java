@@ -201,4 +201,8 @@ public class Utils {
             return left == null ? right == null : left.equals(right);
         }
     }
+
+    public static String normalizeText(String value) {
+        return trimToNull(value);
+    }
 }

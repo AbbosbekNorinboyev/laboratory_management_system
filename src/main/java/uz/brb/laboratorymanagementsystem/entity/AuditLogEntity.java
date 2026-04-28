@@ -31,13 +31,13 @@ public class AuditLogEntity {
     private String actorNameCache;
 
     @Column(name = "plant_id")
-    private String plantId;
+    private Long plantId;
 
     @Column(name = "entity_type", nullable = false)
     private String entityType;
 
     @Column(name = "entity_id", nullable = false)
-    private String entityId;
+    private Long entityId;
 
     @Column(name = "action_code", nullable = false)
     private String actionCode;

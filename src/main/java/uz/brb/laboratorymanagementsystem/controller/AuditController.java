@@ -28,8 +28,8 @@ public class AuditController {
     @RequirePermissions({"audit.read"})
     public List<AuditLogResponse> listAuditLogs(
             @RequestParam(name = "entityType", required = false) String entityType,
-            @RequestParam(name = "entityId", required = false) String entityId,
-            @RequestParam(name = "actorUserId", required = false) String actorUserId,
+            @RequestParam(name = "entityId", required = false) Long entityId,
+            @RequestParam(name = "actorUserId", required = false) Long actorUserId,
             @RequestParam(name = "requestId", required = false) String requestId,
             @RequestParam(name = "actionCode", required = false) String actionCode,
             @RequestParam(name = "limit", required = false, defaultValue = "50")

@@ -1,6 +1,5 @@
 package uz.brb.laboratorymanagementsystem.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,21 +25,24 @@ import static uz.brb.laboratorymanagementsystem.utils.Utils.*;
 public class AuditServiceImpl implements AuditService {
 
     private final AuditLogRepository auditLogRepository;
-    private final ObjectMapper objectMapper;
 
     @Transactional
-    public void record(
+    @Override
+    public void saveLog(
             String entityType,
-            String entityId,
+            Long entityId,
             String actionCode,
-            String plantId,
+            Long plantId,
             Map<String, Object> oldValue,
             Map<String, Object> newValue,
             String comment
     ) {
         RequestContext context = RequestContextHolder.get();
+        System.out.println("context = " + context);
         AuthUser actor = RequestContextHolder.getCurrentUser();
+        System.out.println("actor = " + actor);
         Map<String, Object> diff = buildDiff(oldValue, newValue);
+        System.out.println("diff = " + diff);
 
         AuditLogEntity log = AuditLogEntity.builder()
                 .occurredAt(Instant.now())
@@ -58,6 +60,7 @@ public class AuditServiceImpl implements AuditService {
                 .sourceSystem(context != null ? context.sourceSystem() : null)
                 .ipAddress(context != null ? context.ipAddress() : null)
                 .build();
+        System.out.println("log = " + log);
 
         auditLogRepository.save(log);
     }
@@ -65,23 +68,21 @@ public class AuditServiceImpl implements AuditService {
     @Transactional(readOnly = true)
     public List<AuditLogResponse> listLogs(
             String entityType,
-            String entityId,
-            String actorUserId,
+            Long entityId,
+            Long actorUserId,
             String requestId,
             String actionCode,
             int limit
     ) {
-        int safeLimit = Math.max(1, Math.min(limit, 200));
+        int safeLimit = Math.clamp(limit, 1, 200);
         String normalizedEntityType = trimToNull(entityType);
-        String normalizedEntityId = trimToNull(entityId);
-        String normalizedActorUserId = trimToNull(actorUserId);
         String normalizedRequestId = trimToNull(requestId);
         String normalizedActionCode = trimToNull(actionCode);
 
         List<AuditLogEntity> logs = auditLogRepository.findByFilters(
                 normalizedEntityType,
-                normalizedEntityId,
-                normalizedActorUserId,
+                entityId,
+                actorUserId,
                 normalizedRequestId,
                 normalizedActionCode,
                 PageRequest.of(0, safeLimit)

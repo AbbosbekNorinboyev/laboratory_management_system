@@ -16,7 +16,7 @@ public class AuditLogResponse {
     private String sourceSystem;
     private String ipAddress;
     private String entityType;
-    private String entityId;
+    private Long entityId;
     private String actionCode;
     private String comment;
     private Object oldValueJson;
